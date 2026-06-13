@@ -12,6 +12,10 @@
   -moz-osx-font-smoothing: grayscale;
   --spotlight-x: 50vw;
   --spotlight-y: 50vh;
+  --hero-depth-x: 0px;
+  --hero-depth-y: 0px;
+  --hero-tilt-x: 0deg;
+  --hero-tilt-y: 0deg;
 }
 
 * {
@@ -52,11 +56,44 @@ a {
 .spotlight-layer {
   background:
     radial-gradient(
-      560px circle at var(--spotlight-x) var(--spotlight-y),
-      rgba(245, 255, 107, 0.13),
-      rgba(119, 92, 255, 0.08) 34%,
+      640px circle at var(--spotlight-x) var(--spotlight-y),
+      rgba(245, 255, 107, 0.16),
+      rgba(255, 255, 255, 0.065) 28%,
       transparent 68%
     );
+}
+
+.hero-stage {
+  --card-x: 0px;
+  --card-y: 0px;
+  perspective: 1400px;
+}
+
+.hero-core-glow {
+  background:
+    radial-gradient(circle, rgba(245, 255, 107, 0.18), rgba(245, 255, 107, 0.055) 34%, transparent 68%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 52%);
+  filter: blur(22px);
+  opacity: 0.8;
+}
+
+.gradient-mesh {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(245, 255, 107, 0.18), transparent 28%),
+    radial-gradient(circle at 76% 28%, rgba(255, 255, 255, 0.12), transparent 26%),
+    radial-gradient(circle at 48% 86%, rgba(255, 76, 121, 0.11), transparent 31%),
+    conic-gradient(from 120deg at 50% 42%, rgba(245, 255, 107, 0.08), transparent 23%, rgba(255, 255, 255, 0.08), transparent 48%, rgba(255, 76, 121, 0.08), transparent 70%);
+  filter: saturate(1.12);
+  animation: meshDrift 18s ease-in-out infinite alternate;
+}
+
+.orbital-field {
+  background:
+    radial-gradient(closest-side at 62% 44%, rgba(245, 255, 107, 0.12), transparent 72%),
+    conic-gradient(from 0deg at 50% 50%, transparent, rgba(245, 255, 107, 0.075), transparent 31%, rgba(255, 255, 255, 0.055), transparent 64%, rgba(255, 76, 121, 0.055), transparent);
+  filter: blur(34px);
+  opacity: 0.9;
+  animation: orbitalSweep 28s linear infinite;
 }
 
 .noise-layer {
@@ -64,6 +101,125 @@ a {
     linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent),
     url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.45'/%3E%3C/svg%3E");
   mix-blend-mode: screen;
+}
+
+.forge-panel {
+  transform:
+    translate3d(calc(var(--hero-depth-x) * -0.22), calc(var(--hero-depth-y) * -0.18), 0)
+    rotateX(var(--hero-tilt-x))
+    rotateY(var(--hero-tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 120ms linear;
+}
+
+.forge-panel::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(245, 255, 107, 0.14), transparent 62%);
+  filter: blur(36px);
+  opacity: 0.76;
+  transform: translate3d(calc(var(--hero-depth-x) * 0.55), calc(var(--hero-depth-y) * 0.5), -80px);
+}
+
+.forge-panel::after {
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border-radius: 2rem;
+  background:
+    linear-gradient(110deg, transparent 0 36%, rgba(255, 255, 255, 0.12) 46%, transparent 58%),
+    radial-gradient(circle at 50% 50%, transparent, rgba(0, 0, 0, 0.38) 72%);
+  mix-blend-mode: screen;
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.forge-scan {
+  background:
+    linear-gradient(to bottom, transparent, rgba(245, 255, 107, 0.11), transparent),
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 100% 180px, 38px 100%;
+  animation: scanPass 7s ease-in-out infinite;
+}
+
+.forge-orbit {
+  animation: orbitPulse 5.5s ease-in-out infinite;
+}
+
+.engine-metric {
+  transform: translate3d(calc(var(--hero-depth-x) * 0.28), calc(var(--hero-depth-y) * 0.2), 60px);
+}
+
+.floating-prompt-card {
+  --card-x: 0px;
+  --card-y: 0px;
+  --card-rotate: 0deg;
+  transform: translate3d(var(--card-x), var(--card-y), 0) rotate(var(--card-rotate));
+  transform-style: preserve-3d;
+}
+
+.floating-prompt-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 42%, rgba(245, 255, 107, 0.08));
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.prompt-panel,
+.offer-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.prompt-panel::before,
+.offer-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 0 32%, rgba(255, 255, 255, 0.08), transparent 64%);
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.premium-cta {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 18px 70px rgba(245, 255, 107, 0.13);
+}
+
+.premium-cta::before {
+  content: "";
+  position: absolute;
+  inset: -60% auto -60% -35%;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  transform: skewX(-18deg);
+  transition: left 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-cta:hover::before {
+  left: 112%;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(34px);
+  filter: blur(12px);
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
 }
 
 .hero-anim {
@@ -142,6 +298,69 @@ a {
   }
 }
 
+@keyframes meshDrift {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: scale(1.08) translate3d(-2.5%, 1.5%, 0);
+  }
+}
+
+@keyframes orbitalSweep {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1.06);
+  }
+}
+
+@keyframes scanPass {
+  0%,
+  100% {
+    background-position: 0 -220px, 0 0;
+    opacity: 0.36;
+  }
+
+  48%,
+  55% {
+    background-position: 0 340px, 0 0;
+    opacity: 0.78;
+  }
+}
+
+@keyframes orbitPulse {
+  0%,
+  100% {
+    transform: scale(0.94) rotate(0deg);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.12) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-core-glow {
+    height: 28rem;
+    width: 28rem;
+    top: 34%;
+  }
+
+  .forge-panel {
+    transform: none;
+  }
+
+  .premium-cta {
+    letter-spacing: 0.14em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -158,5 +377,19 @@ a {
 
   .hero-anim {
     opacity: 1;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .forge-panel,
+  .floating-prompt-card,
+  .engine-metric,
+  .gradient-mesh,
+  .orbital-field {
+    transform: none !important;
   }
 }
