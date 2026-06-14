@@ -1,0 +1,209 @@
+@keyframes loaderExit {
+  0%,
+  78% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes pixelPulse {
+  0% {
+    opacity: 0.25;
+    transform: scale(0.78);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes orbitPulse {
+  0%,
+  100% {
+    transform: scale(0.92) rotate(0deg);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.14) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fragmentFloat {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 8px -10px;
+  }
+}
+
+@keyframes worldDrift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: -8px 10px;
+  }
+}
+
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translate3d(0, 32px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroFade {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slowOrbit {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes slowCounterOrbit {
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes particleDrift {
+  0% {
+    opacity: 0;
+    transform: translate3d(-22vw, 12vh, 0) scale(0.6);
+  }
+
+  28% {
+    opacity: 0.75;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes outputFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes scanPulse {
+  0%,
+  100% {
+    opacity: 0.42;
+    filter: blur(0);
+  }
+
+  50% {
+    opacity: 1;
+    filter: blur(0.4px);
+  }
+}
+
+@keyframes gridDrift {
+  to {
+    background-position: 72px 72px;
+  }
+}
+
+@keyframes templateDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-8px, 8px, 0);
+  }
+}
+
+@keyframes premiumOrbit {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes corePulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.96);
+    box-shadow:
+      0 0 72px rgba(245, 255, 107, 0.28),
+      0 0 140px rgba(119, 92, 255, 0.22),
+      inset 0 0 46px rgba(213, 224, 255, 0.26);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.04);
+    box-shadow:
+      0 0 110px rgba(245, 255, 107, 0.42),
+      0 0 180px rgba(119, 92, 255, 0.3),
+      inset 0 0 72px rgba(213, 224, 255, 0.38);
+  }
+}
+
+@keyframes cardFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes particleRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(-140px, calc(var(--drift) * 0.2), 0) scale(0.7);
+  }
+
+  30% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(130px, calc(var(--drift) * -0.16), 0) scale(0.28);
+  }
+}

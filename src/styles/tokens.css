@@ -1,0 +1,24 @@
+:root {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --color-bg: #030303;
+  --color-panel: rgba(255, 255, 255, 0.045);
+  --color-text: #ffffff;
+  --color-muted: rgba(255, 255, 255, 0.46);
+  --color-accent: #f5ff6b;
+  --color-ice: #bae5ff;
+  --border-soft: 1px solid rgba(255, 255, 255, 0.1);
+  --border-accent: 1px solid rgba(245, 255, 107, 0.3);
+  --glow-accent: 0 0 34px rgba(245, 255, 107, 0.5);
+  --shadow-panel: 0 26px 90px rgba(0, 0, 0, 0.38);
+  --motion-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-medium: 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  --hero-reveal-radius: 280px;
+  --hero-reveal-radius-mobile: 190px;
+  --hero-generic-bg: #2d3548;
+  --hero-generic-panel: #39425a;
+  --hero-premium-acid: #f5ff6b;
+  --hero-premium-ice: #d5e0ff;
+  --hero-premium-violet: #775cff;
+}
