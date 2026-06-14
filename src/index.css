@@ -152,6 +152,121 @@ a {
   transform: translate3d(calc(var(--hero-depth-x) * 0.28), calc(var(--hero-depth-y) * 0.2), 60px);
 }
 
+.hero-forge {
+  overflow: hidden;
+}
+
+.weak-fragment,
+.world-output-card {
+  position: absolute;
+  z-index: 4;
+  max-width: 13rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.48);
+  border-radius: 1.25rem;
+  padding: 0.85rem 1rem;
+  font: 700 0.74rem/1.45 "Inter", system-ui, sans-serif;
+  color: rgba(255, 255, 255, 0.58);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+}
+
+.weak-fragment::after,
+.world-output-card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  width: 6rem;
+  background: linear-gradient(90deg, transparent, rgba(245, 255, 107, 0.55), transparent);
+}
+
+.weak-fragment::after {
+  left: 100%;
+}
+
+.world-output-card::after {
+  right: 100%;
+}
+
+.weak-fragment-a {
+  left: 6%;
+  top: 18%;
+  transform: rotate(-6deg);
+  animation: fragmentFloat 7s ease-in-out infinite;
+}
+
+.weak-fragment-b {
+  left: 9%;
+  top: 40%;
+  transform: rotate(4deg);
+  animation: fragmentFloat 8s ease-in-out infinite reverse;
+}
+
+.weak-fragment-c {
+  left: 6%;
+  top: 61%;
+  transform: rotate(-2deg);
+  animation: fragmentFloat 7.5s ease-in-out infinite;
+}
+
+.forge-core {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  z-index: 8;
+  display: flex;
+  width: 7rem;
+  height: 7rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #ffffff;
+  color: #050505;
+  box-shadow: 0 0 90px rgba(245, 255, 107, 0.34), 0 20px 80px rgba(255, 255, 255, 0.18);
+  transform: translate(-50%, -50%);
+}
+
+.forge-core::before {
+  content: "";
+  position: absolute;
+  inset: -54%;
+  border-radius: inherit;
+  background: conic-gradient(from 120deg, transparent, rgba(245, 255, 107, 0.2), transparent 34%, rgba(255, 255, 255, 0.18), transparent 72%);
+  filter: blur(14px);
+  animation: orbitalSweep 16s linear infinite;
+}
+
+.world-output-card {
+  border-color: rgba(245, 255, 107, 0.24);
+  background: rgba(245, 255, 107, 0.09);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.output-one {
+  right: 7%;
+  top: 17%;
+  transform: rotate(6deg);
+  animation: worldEject 7s ease-in-out infinite;
+}
+
+.output-two {
+  right: 5%;
+  top: 39%;
+  transform: rotate(-4deg);
+  animation: worldEject 8s ease-in-out infinite reverse;
+}
+
+.output-three {
+  right: 9%;
+  top: 60%;
+  transform: rotate(3deg);
+  animation: worldEject 7.5s ease-in-out infinite;
+}
+
 .floating-prompt-card {
   --card-x: 0px;
   --card-y: 0px;
@@ -171,19 +286,531 @@ a {
 }
 
 .prompt-panel,
-.offer-card {
+.offer-card,
+.prompt-anatomy-card,
+.blueprint-console,
+.world-card,
+.why-card {
   position: relative;
   overflow: hidden;
 }
 
 .prompt-panel::before,
-.offer-card::before {
+.offer-card::before,
+.prompt-anatomy-card::before,
+.blueprint-console::before,
+.world-card::before,
+.why-card::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(115deg, transparent 0 32%, rgba(255, 255, 255, 0.08), transparent 64%);
   opacity: 0.38;
   pointer-events: none;
+}
+
+.blueprint-flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.blueprint-flow::before {
+  content: "";
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  top: 2.15rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(245, 255, 107, 0.48), rgba(255, 255, 255, 0.08));
+}
+
+.blueprint-node {
+  position: relative;
+  z-index: 1;
+  min-height: 19rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  background: rgba(0, 0, 0, 0.38);
+  padding: 1.1rem;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), border-color 500ms, background 500ms;
+}
+
+.blueprint-node::before {
+  content: "";
+  position: absolute;
+  left: 1.2rem;
+  top: 1.82rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.26);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.035);
+}
+
+.blueprint-node.is-active,
+.blueprint-node:hover {
+  border-color: rgba(245, 255, 107, 0.3);
+  background: rgba(245, 255, 107, 0.075);
+  transform: translateY(-0.45rem);
+}
+
+.blueprint-node.is-active::before,
+.blueprint-node:hover::before {
+  background: #f5ff6b;
+  box-shadow: 0 0 0 8px rgba(245, 255, 107, 0.08), 0 0 32px rgba(245, 255, 107, 0.9);
+}
+
+.world-card {
+  min-height: 25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.75rem;
+  background: rgba(255, 255, 255, 0.035);
+  padding: 1rem;
+  backdrop-filter: blur(18px);
+  transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1), border-color 550ms, background 550ms;
+}
+
+.world-card:hover {
+  border-color: rgba(245, 255, 107, 0.28);
+  background: rgba(245, 255, 107, 0.055);
+  transform: translateY(-0.6rem) rotateX(2deg);
+}
+
+.world-scene {
+  position: relative;
+  height: 13.5rem;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #080808;
+  isolation: isolate;
+}
+
+.world-scene::before,
+.world-scene::after,
+.scene-orb,
+.scene-line,
+.scene-chip {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
+.scene-orb {
+  border-radius: 999px;
+  background: rgba(245, 255, 107, 0.76);
+  box-shadow: 0 0 60px rgba(245, 255, 107, 0.35);
+}
+
+.scene-line {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.scene-chip {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+}
+
+.world-lab {
+  background:
+    radial-gradient(circle at 60% 45%, rgba(245, 255, 107, 0.22), transparent 42%),
+    linear-gradient(135deg, #080808, #121706);
+}
+
+.world-lab::before {
+  inset: 18%;
+  border: 1px solid rgba(245, 255, 107, 0.22);
+  border-radius: 1rem;
+}
+
+.world-lab .scene-orb {
+  left: 42%;
+  top: 32%;
+  width: 4.6rem;
+  height: 4.6rem;
+}
+
+.world-lab .scene-line-a {
+  left: 9%;
+  top: 30%;
+  width: 72%;
+}
+
+.world-lab .scene-line-b {
+  left: 18%;
+  top: 68%;
+  width: 62%;
+}
+
+.world-lab .scene-chip {
+  left: 10%;
+  bottom: 12%;
+  width: 38%;
+  height: 25%;
+  border-radius: 1rem;
+}
+
+.world-spatial {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.14), transparent 34%), #050505;
+}
+
+.world-spatial::before,
+.world-spatial::after {
+  left: 17%;
+  top: 18%;
+  width: 66%;
+  height: 66%;
+  border: 1px solid rgba(245, 255, 107, 0.24);
+  border-radius: 999px;
+}
+
+.world-spatial::after {
+  transform: rotate(58deg) scaleX(1.35);
+}
+
+.world-spatial .scene-orb {
+  left: 41%;
+  top: 39%;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.world-spatial .scene-chip {
+  right: 12%;
+  top: 14%;
+  width: 34%;
+  height: 16%;
+  border-radius: 999px;
+}
+
+.world-geology {
+  background:
+    repeating-linear-gradient(165deg, rgba(245, 255, 107, 0.16) 0 10px, rgba(255, 255, 255, 0.04) 10px 18px, transparent 18px 38px),
+    #080806;
+}
+
+.world-geology::before {
+  left: 48%;
+  top: -10%;
+  width: 12%;
+  height: 125%;
+  background: rgba(255, 255, 255, 0.14);
+  transform: rotate(18deg);
+}
+
+.world-geology .scene-orb {
+  left: 52%;
+  top: 36%;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.world-geology .scene-chip {
+  left: 11%;
+  bottom: 13%;
+  width: 50%;
+  height: 16%;
+  border-radius: 0.65rem;
+}
+
+.world-editorial {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 33%),
+    radial-gradient(circle at 70% 20%, rgba(245, 255, 107, 0.1), transparent 35%),
+    #090909;
+}
+
+.world-editorial::before {
+  left: 11%;
+  top: 13%;
+  width: 35%;
+  height: 70%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.world-editorial::after {
+  content: "Aa";
+  left: 48%;
+  top: 24%;
+  font-family: "Playfair Display", serif;
+  font-size: 5rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.world-nature {
+  background:
+    radial-gradient(circle at 48% 48%, rgba(245, 255, 107, 0.18), transparent 36%),
+    linear-gradient(135deg, #06100b, #0a0a07);
+}
+
+.world-nature::before {
+  left: 20%;
+  top: 16%;
+  width: 58%;
+  height: 66%;
+  border: 1px solid rgba(245, 255, 107, 0.22);
+  border-radius: 42% 58% 48% 52%;
+}
+
+.world-nature .scene-orb {
+  left: 36%;
+  top: 29%;
+  width: 5rem;
+  height: 5rem;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.world-collectible {
+  background:
+    radial-gradient(ellipse at 50% 82%, rgba(255, 255, 255, 0.16), transparent 34%),
+    linear-gradient(180deg, #050505, #111509);
+}
+
+.world-collectible::before {
+  left: 32%;
+  top: 23%;
+  width: 36%;
+  height: 38%;
+  border-radius: 1.2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.26), rgba(245, 255, 107, 0.28));
+  transform: rotate(-10deg) skewY(8deg);
+}
+
+.world-collectible::after {
+  left: 26%;
+  bottom: 18%;
+  width: 48%;
+  height: 12%;
+  border-radius: 999px;
+  background: rgba(245, 255, 107, 0.16);
+  filter: blur(10px);
+}
+
+.world-brutalist {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 50%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 50%),
+    #070707;
+  background-size: 50% 50%;
+}
+
+.world-brutalist::before {
+  left: 10%;
+  top: 16%;
+  width: 58%;
+  height: 22%;
+  background: #f5ff6b;
+}
+
+.world-brutalist::after {
+  content: "TYPE";
+  left: 12%;
+  top: 48%;
+  font-size: 2.7rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.world-holo {
+  background:
+    conic-gradient(from 80deg at 50% 50%, rgba(245, 255, 107, 0.18), rgba(255, 255, 255, 0.06), rgba(255, 76, 121, 0.12), rgba(245, 255, 107, 0.18)),
+    #050505;
+}
+
+.world-holo::before {
+  left: 12%;
+  top: 18%;
+  width: 76%;
+  height: 48%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  transform: perspective(220px) rotateX(22deg);
+}
+
+.world-holo .scene-line-a {
+  left: 18%;
+  top: 42%;
+  width: 64%;
+}
+
+.world-holo .scene-chip {
+  right: 13%;
+  bottom: 12%;
+  width: 34%;
+  height: 20%;
+  border-radius: 1rem;
+}
+
+.world-dream {
+  background:
+    radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 72% 50%, rgba(245, 255, 107, 0.12), transparent 28%),
+    linear-gradient(135deg, #090909, #171018);
+}
+
+.world-dream::before,
+.world-dream::after {
+  width: 38%;
+  height: 28%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1rem;
+}
+
+.world-dream::before {
+  left: 14%;
+  top: 22%;
+  transform: rotate(-8deg);
+}
+
+.world-dream::after {
+  right: 12%;
+  bottom: 18%;
+  transform: rotate(9deg);
+}
+
+.world-object {
+  background:
+    radial-gradient(ellipse at 50% 80%, rgba(245, 255, 107, 0.16), transparent 36%),
+    #050505;
+}
+
+.world-object::before {
+  left: 35%;
+  top: 22%;
+  width: 30%;
+  height: 38%;
+  border-radius: 999px 999px 1.1rem 1.1rem;
+  background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.42));
+}
+
+.world-object .scene-chip {
+  left: 24%;
+  bottom: 15%;
+  width: 52%;
+  height: 15%;
+  border-radius: 999px;
+}
+
+.world-architecture {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    #070807;
+  background-size: 30px 30px;
+}
+
+.world-architecture::before {
+  left: 16%;
+  top: 15%;
+  width: 18%;
+  height: 70%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.world-architecture::after {
+  right: 16%;
+  top: 22%;
+  width: 38%;
+  height: 56%;
+  border: 1px solid rgba(245, 255, 107, 0.24);
+}
+
+.world-kinetic {
+  background: #050505;
+}
+
+.world-kinetic::before {
+  content: "WORLD";
+  left: 7%;
+  top: 15%;
+  font-size: 3.25rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.86);
+  transform: rotate(-5deg);
+}
+
+.world-kinetic::after {
+  content: "PROMPT";
+  right: 7%;
+  bottom: 16%;
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: rgba(245, 255, 107, 0.84);
+  transform: rotate(6deg);
+}
+
+.prompt-anatomy-card {
+  min-height: 31rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(18px);
+}
+
+.prompt-anatomy-card.muted {
+  background: rgba(0, 0, 0, 0.36);
+}
+
+.prompt-anatomy-card.output {
+  border-color: rgba(245, 255, 107, 0.26);
+  background: rgba(245, 255, 107, 0.08);
+  box-shadow: 0 0 90px rgba(245, 255, 107, 0.11);
+}
+
+.prompt-layer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.prompt-layer {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+}
+
+.prompt-layer span {
+  display: block;
+  margin-bottom: 0.75rem;
+  font: 800 0.7rem/1 "Inter", system-ui, sans-serif;
+  color: rgba(245, 255, 107, 0.8);
+}
+
+.prompt-layer p {
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.deliverable-row {
+  display: flex;
+  gap: 1rem;
+  border-radius: 1.25rem;
+  padding: 0.75rem;
+  transition: background 300ms, transform 300ms;
+}
+
+.deliverable-row:hover {
+  background: rgba(255, 255, 255, 0.045);
+  transform: translateX(0.25rem);
+}
+
+.why-card {
+  min-height: 18rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.035);
+  padding: 1.25rem;
+  backdrop-filter: blur(18px);
+}
+
+.why-card:nth-child(2n) {
+  transform: translateY(2rem);
 }
 
 .premium-cta {
@@ -345,6 +972,30 @@ a {
   }
 }
 
+@keyframes fragmentFloat {
+  0%,
+  100% {
+    translate: 0 0;
+    filter: blur(0);
+  }
+
+  50% {
+    translate: 0.4rem -0.5rem;
+    filter: blur(0.2px);
+  }
+}
+
+@keyframes worldEject {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: -0.35rem 0.45rem;
+  }
+}
+
 @media (max-width: 640px) {
   .hero-core-glow {
     height: 28rem;
@@ -353,6 +1004,83 @@ a {
   }
 
   .forge-panel {
+    transform: none;
+  }
+
+  .weak-fragment,
+  .world-output-card {
+    max-width: 9rem;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+  }
+
+  .weak-fragment-a {
+    left: 5%;
+    top: 15%;
+  }
+
+  .weak-fragment-b {
+    left: 8%;
+    top: 35%;
+  }
+
+  .weak-fragment-c {
+    left: 5%;
+    top: 54%;
+  }
+
+  .output-one {
+    right: 5%;
+    top: 18%;
+  }
+
+  .output-two {
+    right: 5%;
+    top: 37%;
+  }
+
+  .output-three {
+    right: 6%;
+    top: 56%;
+  }
+
+  .forge-core {
+    width: 4.75rem;
+    height: 4.75rem;
+  }
+
+  .blueprint-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .blueprint-flow::before {
+    bottom: 3%;
+    left: 2.15rem;
+    right: auto;
+    top: 3%;
+    width: 1px;
+    height: auto;
+  }
+
+  .blueprint-node {
+    min-height: auto;
+    padding: 1.25rem 1.25rem 1.25rem 3rem;
+  }
+
+  .blueprint-node::before {
+    left: 1.4rem;
+  }
+
+  .world-card {
+    min-height: 23rem;
+  }
+
+  .prompt-layer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-card:nth-child(2n) {
     transform: none;
   }
 
@@ -388,8 +1116,16 @@ a {
   .forge-panel,
   .floating-prompt-card,
   .engine-metric,
+  .weak-fragment,
+  .world-output-card,
+  .forge-core,
   .gradient-mesh,
-  .orbital-field {
+  .orbital-field,
+  .blueprint-node,
+  .world-card,
+  .deliverable-row,
+  .why-card {
     transform: none !important;
+    translate: none !important;
   }
 }
